@@ -1,28 +1,20 @@
 import { useEffect } from 'react';
-import { useRouter } from 'next/router';
 
-export default function SignInPage() {
-  const router = useRouter();
-  
+export default function LoggedIn() {
   useEffect(() => {
-    // Simple redirect to dashboard after delay
-    const timer = setTimeout(() => {
-      router.push('/logged-in');
-    }, 2000);
-    
-    return () => clearTimeout(timer);
-  }, [router]);
-  
+    // This page should be redirected by middleware
+  }, []);
+
   return (
     <div className="container">
-      <div className="card">
-        <img 
-          src="https://github.com/sddpljx/icon/blob/main/claude-color.png?raw=true" 
-          alt="Claude Logo" 
-          className="logo" 
+      <main className="card">
+        <img
+          src="https://github.com/sddpljx/icon/blob/main/claude-color.png?raw=true"
+          alt="Claude Logo"
+          className="logo"
         />
         <h1 className="title">Claude 助手</h1>
-        <p className="description">登录成功，正在跳转...</p>
+        <p className="description">登录成功，正在跳转到服务页面...</p>
         <div
           style={{
             width: '50px',
@@ -41,7 +33,7 @@ export default function SignInPage() {
             }
           }
         `}</style>
-      </div>
+      </main>
     </div>
   );
 } 

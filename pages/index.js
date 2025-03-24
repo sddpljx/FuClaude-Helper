@@ -1,5 +1,4 @@
 import Head from 'next/head';
-import { SignIn, SignedIn, SignedOut } from '@clerk/nextjs';
 
 export default function Home() {
   return (
@@ -18,21 +17,26 @@ export default function Home() {
         />
         <h1 className="title">Claude 助手</h1>
         
-        <SignedIn>
-          <p className="description">
-            您已登录，即将跳转到 Claude 助手页面...
-          </p>
-          <meta httpEquiv="refresh" content="2;url=/dashboard" />
-        </SignedIn>
+        <p className="description">
+          请登录后继续使用 Claude 助手
+        </p>
         
-        <SignedOut>
-          <p className="description">
-            请登录后继续使用 Claude 助手
-          </p>
-          <div style={{ width: '100%', maxWidth: '400px', margin: '0 auto' }}>
-            <SignIn path="/sign-in" routing="path" signUpUrl="/sign-up" />
-          </div>
-        </SignedOut>
+        <div style={{ marginTop: '20px' }}>
+          <a 
+            href="/sign-in" 
+            style={{ 
+              display: 'inline-block',
+              padding: '12px 24px',
+              backgroundColor: '#2c2c2c',
+              color: 'white',
+              borderRadius: '8px',
+              fontWeight: 'bold',
+              textDecoration: 'none'
+            }}
+          >
+            点击登录
+          </a>
+        </div>
       </main>
     </div>
   );

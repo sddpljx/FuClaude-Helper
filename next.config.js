@@ -2,7 +2,10 @@
 const nextConfig = {
   reactStrictMode: true,
   env: {
-    ORIGINAL_WEBSITE: "https://sddpljx-fuclaude.hf.space",
+    NEXT_PUBLIC_ORIGINAL_WEBSITE: "https://sddpljx-fuclaude.hf.space",
+  },
+  publicRuntimeConfig: {
+    ORIGINAL_WEBSITE: process.env.NEXT_PUBLIC_ORIGINAL_WEBSITE || "https://sddpljx-fuclaude.hf.space",
   },
   async redirects() {
     return [
