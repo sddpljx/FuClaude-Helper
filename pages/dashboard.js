@@ -1,11 +1,20 @@
 import { useEffect } from 'react';
+import { useAuth } from '@clerk/nextjs';
 
 export default function Dashboard() {
+  const { isLoaded, userId } = useAuth();
+
   useEffect(() => {
-    // Simple redirect to the original website
+    if (!isLoaded || !userId) return;
+
+    // Redirect to the original website once authenticated
     const originalWebsite = process.env.NEXT_PUBLIC_ORIGINAL_WEBSITE || 'https://sddpljx-fuclaude.hf.space';
     window.location.href = originalWebsite;
-  }, []);
+  }, [isLoaded, userId]);
+
+  if (!isLoaded || !userId) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="container">
@@ -16,7 +25,7 @@ export default function Dashboard() {
           className="logo"
         />
         <h1 className="title">Claude 助手</h1>
-        <p className="description">正在连接到 Claude 服务，请稍候...</p>
+        <p className="description">登录成功，正在跳转到 Claude 服务页面...</p>
         <div
           style={{
             width: '50px',
