@@ -1,75 +1,63 @@
 # FuClaude Helper
 
-A Next.js application with Clerk authentication that automatically logs in to FuClaude API after successful authentication.
+这是一个使用 Next.js 和 Clerk 身份认证服务的项目，用于连接到 Claude 助手服务。
 
-## Features
+## 功能特点
 
-- Next.js 13 app router
-- Clerk authentication
-- Tailwind CSS for styling
-- Automatic login to FuClaude API after Clerk authentication
-- Responsive design with a split layout on the homepage
+- 使用 Clerk 提供安全的用户身份验证
+- 登录后自动跳转到原始 Claude 网站
+- 使用 Next.js 构建，可部署到 Vercel
 
-## Setup
+## 部署指南
 
-### Prerequisites
+### 1. 创建 Clerk 账号
 
-- Node.js 16.8.0 or later
-- npm or yarn
+1. 前往 [Clerk.dev](https://clerk.dev) 注册账号
+2. 创建一个新的应用
+3. 获取 API 密钥 (Publishable Key 和 Secret Key)
 
-### Environment Variables
+### 2. 设置环境变量
 
-Create a `.env.local` file in the root of your project with the following variables:
+在 Vercel 中设置以下环境变量：
 
-```env
-# Clerk Authentication
+```
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
 CLERK_SECRET_KEY=your_clerk_secret_key
-NEXT_PUBLIC_CLERK_SIGN_IN_URL=/
+NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
 NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
 NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/dashboard
 NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/dashboard
-
-# FuClaude API
-FUCLAUDE_API_TOKEN=your_fuclaude_api_token
-FUCLAUDE_API_URL=https://api.fuclaude.com # Replace with the actual API URL
+ORIGINAL_WEBSITE=https://sddpljx-fuclaude.hf.space
+SESSION_KEY=sk-ant-sid01
 ```
 
-### Installation
+### 3. 部署到 Vercel
 
-1. Clone the repository or extract the project files
-2. Install dependencies:
+1. 将代码推送到 GitHub 仓库
+2. 在 Vercel 中导入该仓库
+3. 设置上述环境变量
+4. 部署
 
-```bash
-npm install
-# or
-yarn install
-```
-
-3. Run the development server:
+## 开发指南
 
 ```bash
+# 本地开发
 npm run dev
-# or
-yarn dev
+
+# 构建项目
+npm run build
+
+# 启动生产服务
+npm run start
 ```
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
+## 自定义设置
 
-## Deployment on Vercel
+如需修改 Claude 助手的原始网站地址或 session key，请更新环境变量中的 `ORIGINAL_WEBSITE` 和 `SESSION_KEY`。
 
-1. Push your code to a GitHub repository
-2. Sign up/login to [Vercel](https://vercel.com)
-3. Create a new project by importing your GitHub repository
-4. Configure the environment variables in the Vercel project settings
-5. Deploy the project
+## 技术栈
 
-## Project Structure
-
-- `app/` - Next.js app router pages and API routes
-- `components/` - React components for the UI
-- `app/api/fuclaude/login` - API route for automatic FuClaude login
-
-## License
-
-MIT 
+- Next.js
+- React
+- Clerk 身份认证
+- Vercel 部署 

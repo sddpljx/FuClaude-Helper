@@ -1,8 +1,17 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  images: {
-    domains: ['images.unsplash.com'],
+  env: {
+    ORIGINAL_WEBSITE: "https://sddpljx-fuclaude.hf.space",
+  },
+  async redirects() {
+    return [
+      {
+        source: '/dashboard',
+        destination: process.env.ORIGINAL_WEBSITE,
+        permanent: false,
+      },
+    ]
   },
 }
 
