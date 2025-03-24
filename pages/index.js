@@ -1,9 +1,7 @@
 import Head from 'next/head';
-import { useAuth, SignedIn, SignedOut, SignInButton } from '@clerk/nextjs';
+import { SignIn, SignedIn, SignedOut } from '@clerk/nextjs';
 
 export default function Home() {
-  const { isSignedIn } = useAuth();
-
   return (
     <div className="container">
       <Head>
@@ -24,29 +22,16 @@ export default function Home() {
           <p className="description">
             您已登录，即将跳转到 Claude 助手页面...
           </p>
-          <meta httpEquiv="refresh" content={`2;url=${process.env.NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL}`} />
+          <meta httpEquiv="refresh" content="2;url=/dashboard" />
         </SignedIn>
         
         <SignedOut>
           <p className="description">
             请登录后继续使用 Claude 助手
           </p>
-          <SignInButton mode="modal">
-            <button 
-              style={{ 
-                padding: '12px 24px',
-                backgroundColor: '#2c2c2c',
-                color: 'white',
-                border: 'none',
-                borderRadius: '8px',
-                fontSize: '16px',
-                fontWeight: 'bold',
-                cursor: 'pointer'
-              }}
-            >
-              登录
-            </button>
-          </SignInButton>
+          <div style={{ width: '100%', maxWidth: '400px', margin: '0 auto' }}>
+            <SignIn path="/sign-in" routing="path" signUpUrl="/sign-up" />
+          </div>
         </SignedOut>
       </main>
     </div>
