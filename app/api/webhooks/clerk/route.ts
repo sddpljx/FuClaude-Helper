@@ -1,39 +1,55 @@
-import { Webhook } from '@clerk/nextjs/server';
 import { NextResponse } from 'next/server';
+import { headers } from 'next/headers';
+import { clerkClient } from '@clerk/nextjs';
+import { WebhookEvent } from '@clerk/nextjs/server';
 
+// 简化的 webhook 处理路由
 export async function POST(req: Request) {
-  const payload = await req.json();
-  const headerPayload = req.headers;
-  const svix_id = headerPayload.get("svix-id");
-  const svix_timestamp = headerPayload.get("svix-timestamp");
-  const svix_signature = headerPayload.get("svix-signature");
-
+  // 获取请求头和请求体
+  const headersList = headers();
+  const payload = await req.text();
+  
+  // 获取 webhook 签名相关的头信息
+  const svix_id = headersList.get("svix-id");
+  const svix_timestamp = headersList.get("svix-timestamp");
+  const svix_signature = headersList.get("svix-signature");
+  
+  // 验证必要的头信息是否存在
   if (!svix_id || !svix_timestamp || !svix_signature) {
+    console.error("Missing required Svix headers");
     return new Response('Missing svix headers', { status: 400 });
   }
-
+  
   try {
-    const evt = Webhook.verify(
-      JSON.stringify(payload),
-      {
-        "svix-id": svix_id,
-        "svix-timestamp": svix_timestamp,
-        "svix-signature": svix_signature,
-      },
-      process.env.CLERK_WEBHOOK_SECRET
-    );
-
-    // 处理 webhook 事件
-    const eventType = evt.type;
-    if (eventType === 'user.created') {
-      const { id, email_addresses, first_name, last_name } = evt.data;
-      // 在这里处理用户创建事件
-      console.log('User created:', { id, email_addresses, first_name, last_name });
+    // 将请求主体解析为 JSON
+    const bodyJson = JSON.parse(payload);
+    const evt = bodyJson as WebhookEvent;
+    
+    // 处理不同类型的 webhook 事件
+    switch (evt.type) {
+      case 'user.created':
+        console.log(`用户创建: ${evt.data.id}`);
+        // 在这里添加您的自定义业务逻辑
+        break;
+        
+      case 'user.updated':
+        console.log(`用户更新: ${evt.data.id}`);
+        // 在这里添加您的自定义业务逻辑
+        break;
+        
+      case 'session.created':
+        console.log(`会话创建: ${evt.data.id}`);
+        // 在这里添加您的自定义业务逻辑
+        break;
+      
+      default:
+        console.log(`未处理的事件类型: ${evt.type}`);
     }
-
+    
+    // 返回成功响应
     return NextResponse.json({ success: true });
-  } catch (err) {
-    console.error('Error verifying webhook:', err);
-    return new Response('Error verifying webhook', { status: 400 });
+  } catch (error) {
+    console.error('Webhook 处理错误:', error);
+    return new Response('Webhook 处理错误', { status: 400 });
   }
 } 
