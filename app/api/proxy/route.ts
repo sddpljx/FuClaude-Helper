@@ -1,7 +1,7 @@
 import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 
-if (!process.env.CLAUDE_SESSION_KEYS || !process.env.CLAUDE_ORIGINAL_WEBSITE) {
+if (!process.env.SKEYS || !process.env.CLAUDE_ORIGINAL_WEBSITE) {
   throw new Error("Missing required environment variables for Claude configuration");
 }
 
