@@ -7,9 +7,11 @@ export default function Home() {
     <main className="flex min-h-screen flex-col items-center justify-center p-24">
       <div className="w-full max-w-md">
         <SignIn 
-          afterSignUpUrl="/"
-          afterSignInUrl="/"
+          routing="path"
+          path="/sign-in"
           signUpUrl="/sign-up"
+          afterSignInUrl="/"
+          afterSignUpUrl="/"
         />
       </div>
     </main>
